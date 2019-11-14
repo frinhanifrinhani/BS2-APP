@@ -3,6 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
+import { AuthenticationService } from './../_services/authentication.service';
+
 @Component({ templateUrl: './login.component.html' })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
@@ -12,21 +14,28 @@ export class LoginComponent implements OnInit {
   error = '';
 
   constructor(
-    private formBuilder: FormBuilder
-  ) { }
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private authenticationService: AuthenticationService
+  ) {
+    if (this.authenticationService.currentUserValue) {
+      this.router.navigate(['/']);
+    }
+  }
 
   ngOnInit() {
     this.builderLoginFormForm()
 
   }
 
-  private builderLoginFormForm () {
+  private builderLoginFormForm() {
     this.loginForm = this.formBuilder.group({
       email: ['', Validators.required],
       password: ['', Validators.required],
     });
   }
-  
+
   // f retorna os controles do form
   get f() { return this.loginForm.controls; }
 
@@ -36,6 +45,19 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.invalid) {
       return;
     }
+    this.loading = true;
+
+    this.authenticationService.login(this.loginForm.value)
+      .pipe()
+      .subscribe(
+        data => {
+          this.router.navigate(['/']);
+        }, error => {
+          this.error = error;
+          this.loading = false;
+        }
+      );
+
   }
 
 }
