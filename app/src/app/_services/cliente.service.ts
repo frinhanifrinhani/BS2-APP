@@ -4,7 +4,7 @@ import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Observable, throwError } from 'rxjs';
+import { Observable,throwError } from 'rxjs';
 import { retry, catchError, map } from 'rxjs/operators';
 
 
@@ -19,4 +19,13 @@ export class ClienteService {
             cliente.clientes
         ));
     }
+    
+    cadastrarCliente(data): Observable<Cliente> {
+        return this.http.post<Cliente>(`${environment.apiUrl}/cliente/cadastrar`,
+            JSON.stringify(data))
+            .pipe(map(cliente =>
+                cliente
+            ));
+    }
+
 }
