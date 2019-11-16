@@ -5,6 +5,8 @@ import { CadastraClienteComponent } from './cadastra-cliente/cadastra-cliente.co
 import { ReactiveFormsModule } from '@angular/forms';
 import { EditaClienteComponent } from './edita-cliente/edita-cliente.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgxPaginationModule } from 'ngx-pagination';
+
 @NgModule({
   declarations: [
     ClientesComponent,
@@ -14,7 +16,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    NgbModule
+    NgbModule,
+    NgxPaginationModule
+
   ],
   
 })

@@ -10,7 +10,7 @@ import { NgbModal, ModalDismissReasons, NgbModalOptions } from '@ng-bootstrap/ng
   styleUrls: ['./clientes.component.css']
 })
 export class ClientesComponent implements OnInit {
-
+  public paginaAtual = 1;
   clientes: any;
   clienteService: ClienteService;
   error = '';

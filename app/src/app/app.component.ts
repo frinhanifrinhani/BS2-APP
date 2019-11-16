@@ -1,4 +1,3 @@
-import { User } from './_models/user';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
