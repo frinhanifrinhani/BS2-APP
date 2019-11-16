@@ -2,6 +2,9 @@
 table{
     font-size: 0.8em;
 }
+.buttonClose{
+  font-size: 1rem;
+}
 </style>
 <div class="container">
     <p></p>
@@ -13,6 +16,24 @@ table{
       <p>  
 <a href="/clientes/cadastrar" class="btn btn-success" >Novo Cliente</a> 
 </p> 
+<div *ngIf="messageOk" class="alert alert-success" role="alert">
+  Cliente excluído com sucesso!
+</div>
+<ng-template #confirmDelete let-modal>
+  <div class="modal-header">
+    <button type="button" class="close buttonClose" aria-label="Close" (click)="modal.dismiss('no')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    Deseja mesmo excluir este cliente!
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-outline-primary" (click)="modal.dismiss('no')">Não</button>
+    <button type="button" class="btn btn-outline-danger" (click)="modal.close('yes')">Sim</button>
+  </div>
+</ng-template>
+
 <table class="table">
         <thead class="thead">
           <tr>
@@ -47,8 +68,9 @@ table{
                 <td>{{cliente.estado}}</td>
                 <td>{{cliente.cep}}</td>
                 <td>
-                    <a href="/clientes/editar/{{cliente.id}}" class="btn btn-primary">Editar</a> &nbsp;
-                    <button type="button" class="btn btn-danger">Excluir</button> 
+                    <a href="/clientes/editar/{{cliente.id}}" class="btn btn-primary">Editar</a> &nbsp; 
+                    <!--button type="button" class="btn btn-danger" (click)="deleteCliente(cliente.id)" >Excluir</button --> 
+                    <button type="button" class="btn btn-danger" (click)="open(confirmDelete,cliente.id)" >Excluir</button> 
                 </td>
             </tr>
     </tbody>

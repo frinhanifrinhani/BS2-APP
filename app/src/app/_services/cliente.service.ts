@@ -41,4 +41,11 @@ export class ClienteService {
             ));
     }
 
+    deleteCliente(id){
+        return this.http.delete<Cliente>(`${environment.apiUrl}/cliente/excluir/${id}`)
+        .pipe(map(cliente =>
+            cliente
+        ));
+      }
+
 }

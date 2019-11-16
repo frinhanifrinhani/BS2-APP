@@ -101,7 +101,7 @@ export class CadastraClienteComponent implements OnInit {
         this.button = false;
         setTimeout(() => {
           this.router.navigate(['/clientes']);
-      }, 3000); 
+      }, 2000); 
 
       },
         errorResponse => {

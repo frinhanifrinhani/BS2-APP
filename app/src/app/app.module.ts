@@ -20,7 +20,7 @@ import { TokenInterceptor } from './_helpers';
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    ClientesModule
+    ClientesModule,
   ],
   providers: [        
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }

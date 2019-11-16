@@ -70,7 +70,6 @@ export class EditaClienteComponent implements OnInit {
     this.clienteService.getCliente(id)
       .subscribe(
         data => {this.setCliente(data)
-          console.log(data)
         },
         errorResponse => {
           this.error = errorResponse.errors
@@ -134,7 +133,7 @@ export class EditaClienteComponent implements OnInit {
         this.button = false;
         setTimeout(() => {
           this.router.navigate(['/clientes']);
-      }, 3000); 
+      }, 2000); 
 
       },
         errorResponse => {

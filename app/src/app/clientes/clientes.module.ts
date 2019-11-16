@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { CadastraClienteComponent } from './cadastra-cliente/cadastra-cliente.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EditaClienteComponent } from './edita-cliente/edita-cliente.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
   declarations: [
     ClientesComponent,
@@ -12,7 +13,8 @@ import { EditaClienteComponent } from './edita-cliente/edita-cliente.component';
   ],
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbModule
   ],
   
 })
