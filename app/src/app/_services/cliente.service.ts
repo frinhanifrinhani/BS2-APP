@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable,throwError } from 'rxjs';
-import { retry, catchError, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 
 
@@ -15,13 +15,26 @@ export class ClienteService {
 
     getClientes(): Observable<Cliente[]> {
         return this.http.get<any>(`${environment.apiUrl}/cliente`).pipe(map(cliente =>
-            //cliente.clientes.data
             cliente.clientes
+        ));
+    }
+
+    getCliente(id): Observable<Cliente[]> {
+        return this.http.get<any>(`${environment.apiUrl}/cliente/${id}`).pipe(map(cliente =>
+            cliente.cliente
         ));
     }
     
     cadastrarCliente(data): Observable<Cliente> {
         return this.http.post<Cliente>(`${environment.apiUrl}/cliente/cadastrar`,
+            JSON.stringify(data))
+            .pipe(map(cliente =>
+                cliente
+            ));
+    }
+
+    editarCliente(data,id): Observable<Cliente> {
+        return this.http.put<Cliente>(`${environment.apiUrl}/cliente/atualizar/${id}`,
             JSON.stringify(data))
             .pipe(map(cliente =>
                 cliente
