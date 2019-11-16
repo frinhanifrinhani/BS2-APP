@@ -1,0 +1,65 @@
+<style>
+table{
+    font-size: 0.8em;
+}
+</style>
+<div class="container">
+    <p></p>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active" aria-current="page">Clientes</li>
+        </ol>
+      </nav> 
+      <p>  
+<a href="/clientes/cadastrar" class="btn btn-success" >Novo Cliente</a> 
+</p> 
+<table class="table">
+        <thead class="thead">
+          <tr>
+            <th  scope="col">Nome</th>
+            <th  scope="col">Data de Nasc.</th>
+            <th  scope="col">Sexo</th>
+            <th  scope="col">Endereço</th>
+            <th  scope="col">Bairro</th>
+            <th  scope="col">Cidade</th>
+            <th  scope="col">Estado</th>
+            <th  scope="col">CEP</th>
+            <th  scope="col">Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+            <tr  scope="row" *ngFor="let cliente of clientes">
+                <td>{{cliente.nome}}</td>
+                <td>{{cliente.data_nascimento  | date : 'dd/MM/yyyy'}}</td>
+                <td>
+                    <div *ngIf="cliente.sexo == 'F'; else M ">Feminino</div>
+                    <ng-template #M>
+                            Masculino
+                    </ng-template>
+                </td>
+                <td>{{cliente.endereco}} 
+                        {{cliente?.rua}} 
+                        {{cliente?.numero}} 
+                        {{cliente?.complemento}} 
+                </td>
+                <td>{{cliente.bairro}}</td>
+                <td>{{cliente.cidade}}</td>
+                <td>{{cliente.estado}}</td>
+                <td>{{cliente.cep}}</td>
+                <td>
+                    <button type="button" class="btn btn-primary">Editar</button> &nbsp;
+                    <button type="button" class="btn btn-danger">Excluir</button> 
+                </td>
+            </tr>
+    </tbody>
+</table>
+<nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item"><a class="page-link" href="#">Anterior</a></li>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item"><a class="page-link" href="#">Próxima</a></li>
+        </ul>
+</nav>
+</div>

@@ -1,22 +1,25 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { environment } from './../../environments/environment';
 import { User } from './../_models';
 
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<User>;
-  public currentUser: Observable<User>;
-  mostrarMenuEmiter = new EventEmitter<boolean>();
+  public user: Observable<User>;
 
   constructor(private http: HttpClient) {
-    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
-    this.currentUser = this.currentUserSubject.asObservable();
+    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
+    this.user = this.currentUserSubject.asObservable();
   }
 
   public get currentUserValue(): User {
@@ -27,18 +30,17 @@ export class AuthenticationService {
     return this.http.post<any>(`${environment.apiUrl}/auth/login`, credentials).pipe(map(user => {
       if (user && user.token) {
         localStorage.setItem('user', (JSON.stringify(user)));
-        this.mostrarMenuEmiter.emit(true);
       }
       return user;
     }));
   }
 
-  logout() {
-    localStorage.removeItem('user');
-    this.mostrarMenuEmiter.emit(false);
-    this.currentUserSubject.next(null);
+  public getToken() {
+    return this.currentUserSubject.value.token;
   }
 
-  
-
+  logout() {
+    localStorage.removeItem('user');
+    this.currentUserSubject.next(null);
+  }
 }

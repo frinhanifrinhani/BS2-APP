@@ -1,12 +1,16 @@
+import { ClientesComponent } from './clientes.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-
-
+import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
-  declarations: [],
+  declarations: [
+    ClientesComponent,
+  ],
   imports: [
-    CommonModule
-  ]
+    CommonModule,
+    ReactiveFormsModule
+
+  ],
+
 })
 export class ClientesModule { }

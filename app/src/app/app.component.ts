@@ -1,8 +1,9 @@
+import { User } from './_models/user';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthenticationService } from './_services';
-import { User } from './_models';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -10,23 +11,30 @@ import { User } from './_models';
 })
 export class AppComponent {
 
-    mostrarMenu: boolean = false;
+  showMenu: boolean = false;
+  authUser = this.getAuthUser();
 
-    constructor(
-        private router: Router,
-        private authenticationService: AuthenticationService
-    ) {
-        
-    }
+  constructor(
+    private router: Router,
+    private authenticationService: AuthenticationService
+  ) {
 
-    ngOnInit() {
-      this.authenticationService.mostrarMenuEmiter.subscribe(
-       mostrar => this.mostrarMenu = mostrar
-      );
+  }
+
+  ngOnInit() {
+
+  }
+
+  getAuthUser() {
+    if (this.authenticationService.currentUserValue) {
+      let authUser = this.authenticationService.currentUserValue;
+      this.showMenu = true;
+      return authUser;
     }
-    
-    logout() {
-        this.authenticationService.logout();
-        this.router.navigate(['/login']);
-    }
+  }
+
+  logout() {
+    this.authenticationService.logout();
+    location.reload();
+  }
 }

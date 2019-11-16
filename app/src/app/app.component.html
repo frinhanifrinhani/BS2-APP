@@ -1,19 +1,30 @@
-
-<nav *ngIf="mostrarMenu" class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">BS2 Api</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarText">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Clientes <span class="sr-only">(current)</span></a>
-        </li>
-      </ul>
-      <span class="navbar-text">
-        <button class="btn btn-outline-danger my-2 my-sm-0" type="button" (click)="logout()">Sair</button>
-      </span>
-    </div>
-  </nav> 
+<nav *ngIf="showMenu" class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">BS2 Api</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+    aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/clientes">Clientes <span class="sr-only">(current)</span></a>
+      </li>
+    </ul>
+    <span class="navbar-text">
+      <div class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          {{authUser.user.name}}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item">Nome: {{authUser.user.name}}</a>
+          <a class="dropdown-item">Email: {{authUser.user.email}}</a>
+          <a class="dropdown-item" (click)="logout()" href="#">Sair</a>
+        </div>
+      </div>
+      <!--button class="btn btn-outline-danger my-2 my-sm-0" type="button" (click)="logout()">Sair</button -->
+    </span>
+  </div>
+</nav>
 
 <router-outlet></router-outlet>

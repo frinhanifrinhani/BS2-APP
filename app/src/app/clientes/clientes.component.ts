@@ -1,5 +1,7 @@
-import { Component,OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { first } from 'rxjs/operators';
+import { ClienteService } from '../_services/cliente.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-clientes',
@@ -8,9 +10,32 @@ import { first } from 'rxjs/operators';
 })
 export class ClientesComponent implements OnInit {
 
-  constructor() { }
+  clientes: any;
+  clienteService: ClienteService;
+  error = '';
 
-  ngOnInit() {
+  config: any;
+  collection = [];
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    clienteService: ClienteService
+  ) {
+    this.clienteService = clienteService;
   }
 
+  ngOnInit() {
+    this.getClientes()
+  }
+
+  getClientes() {
+    this.clienteService.getClientes()
+      .subscribe(
+        data => {
+          this.clientes = data;
+        }, errorResponse => {
+          this.error = errorResponse;
+        }
+      )
+  }
 }

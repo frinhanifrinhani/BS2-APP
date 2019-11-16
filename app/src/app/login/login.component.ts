@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { first } from 'rxjs/operators';
 
 import { AuthenticationService } from './../_services/authentication.service';
 
@@ -25,11 +24,11 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.builderLoginFormForm()
-
+    this.builderLoginForm()
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
-  private builderLoginFormForm() {
+  private builderLoginForm() {
     this.loginForm = this.formBuilder.group({
       email: ['', Validators.required],
       password: ['', Validators.required],
@@ -51,13 +50,11 @@ export class LoginComponent implements OnInit {
       .pipe()
       .subscribe(
         data => {
-          this.router.navigate(['/']);
-        }, error => {
-          this.error = error;
+          location.reload();
+        }, errorResponse => {
+          this.error = errorResponse.error.error;
           this.loading = false;
         }
       );
-
   }
-
 }
