@@ -7,19 +7,6 @@
     </ol>
   </nav>
 
-
-  <!--form [formGroup]="clienteForm">
-        <div class="col-sm">
-            <label for="nome">Nome</label>
-            <input type="text" formControlName="nome" class="form-control" />
-        </div>
-        <div class="col-sm">
-          Uma de três colunas
-        </div>
-        <div class="col-sm">
-          Uma de três colunas
-        </div>
-    </form--->
     <div *ngIf="messageOk" class="alert alert-success" role="alert">
         Cliente cadastrado com sucesso!
       </div>
@@ -32,7 +19,7 @@
           <div class="col-md-6">
             <label for="nome">Nome</label>
             <input type="text" formControlName="nome" class="form-control" />
-            <div *ngIf="submitted && f.nome.errors" class="invalid-feedback d-block">
+            <div *ngIf="submitted && f.nome.errors" class="invalid-feedback d-block" maxlength="80">
               <div *ngIf="f.nome.errors.required">Nome é obrigatório!</div>
             </div>
           </div>
@@ -59,34 +46,34 @@
         <div class="row">
           <div class="col-3">
             <label for="cep">CEP</label>
-            <input type="text" formControlName="cep" class="form-control" (blur)="consultaCep()" />
+            <input type="text" formControlName="cep" class="form-control" (blur)="consultaCep()" maxlength="8" />
           </div>
           <div class="col-5">
             <label for="endereco">Endereço</label>
-            <input type="text" formControlName="endereco" class="form-control" />
+            <input type="text" formControlName="endereco" class="form-control" maxlength="80" />
           </div>
           <div class="col-4">
-            <label for="end_complemento">Complemento</label>
-            <input type="text" formControlName="end_complemento" class="form-control" />
+            <label for="complemento">Complemento</label>
+            <input type="text" formControlName="complemento" class="form-control" maxlength="80"/>
           </div>
         </div>
 
         <div class="row">
           <div class="col-2">
             <label for="numero">Número</label>
-            <input type="text" formControlName="numero" class="form-control" />
+            <input type="text" formControlName="numero" class="form-control" maxlength="20" />
           </div>
           <div class="col-3">
             <label for="bairro">Bairro</label>
-            <input type="text" formControlName="bairro" class="form-control" />
+            <input type="text" formControlName="bairro" class="form-control" maxlength="50" />
           </div>
           <div class="col-4">
             <label for="cidade">Cidade</label>
-            <input type="text" formControlName="cidade" class="form-control" [attr.disabled]="true" />
+            <input type="text" formControlName="cidade" class="form-control" [attr.disabled]="true" maxlength="50" />
           </div>
           <div class="col-3">
             <label for="estado">Estado</label>
-            <input type="text" formControlName="estado" class="form-control" [attr.disabled]="true" />
+            <input type="text" formControlName="estado" class="form-control" [attr.disabled]="true" maxlength="2" />
           </div>
         </div>
         <p></p>

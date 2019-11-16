@@ -2,7 +2,7 @@ import { ClienteService } from './../../_services/cliente.service';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BuscaCep } from 'src/app/_services/busca-cep.service';
+import { BuscaCepService } from 'src/app/_services/busca-cep.service';
 
 @Component({
   selector: 'app-cadastra-cliente',
@@ -25,7 +25,7 @@ export class CadastraClienteComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private clienteService: ClienteService,
-    private buscaCep: BuscaCep
+    private buscaCepService: BuscaCepService
   ) {
     this.clienteService = clienteService;
   }
@@ -41,7 +41,7 @@ export class CadastraClienteComponent implements OnInit {
       sexo: ['', Validators.required],
       cep: [''],
       endereco: [''],
-      end_complemento: [''],
+      complemento: [''],
       numero: [''],
       bairro: [''],
       cidade: [''],
@@ -67,7 +67,7 @@ export class CadastraClienteComponent implements OnInit {
     let cep = this.clienteForm.get('cep').value;
 
     if(cep != null && cep !== '') {
-      this.buscaCep.buscaCep(cep)
+      this.buscaCepService.buscaCep(cep)
         .subscribe(
           data => this.setEndereco(data));
     }
@@ -76,7 +76,7 @@ export class CadastraClienteComponent implements OnInit {
   setEndereco(data){
     this.clienteForm.patchValue({
         endereco: data.logradouro,
-        end_complemento: data.complemento,
+        complemento: data.complemento,
         bairro: data.bairro,
         cidade: data.localidade,
         estado: data.uf,
@@ -92,6 +92,7 @@ export class CadastraClienteComponent implements OnInit {
       return;
     }
     this.loading = true;
+    
     this.clienteService.cadastrarCliente(this.clienteForm.value)
       .subscribe(res => {
         
@@ -104,16 +105,12 @@ export class CadastraClienteComponent implements OnInit {
 
       },
         errorResponse => {
-            /*if(errorResponse.error.errors.data_nascimento){
-              this.error = errorResponse.error.errors.data_nascimento;
-            }else{*/
-            this.error = errorResponse.errors
-            //console.log(errorResponse)
-           //}
-          console.log(this.error)
+          this.error = errorResponse.errors
           this.loading = false;
         }
+      
       );
+      
     
 
   }

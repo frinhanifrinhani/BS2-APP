@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { of, Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
-export class BuscaCep {
+export class BuscaCepService {
     constructor(private http: HttpClient) { }
 
     buscaCep(cep: string) {
