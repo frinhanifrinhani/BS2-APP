@@ -33,9 +33,9 @@
                     <div class="col-md-3">
                         <label for="sexo">Sexo</label>
                         <select class="custom-select" (change)="changeSexo($event)" formControlName="sexo">
-              <option value="">...</option>
-              <option *ngFor="let sexo of Sexo" value="{{sexo.value}}">{{sexo.tipo}}</option>
-            </select>
+                            <option value="">...</option>
+                            <option *ngFor="let sexo of Sexo" value="{{sexo.value}}">{{sexo.tipo}}</option>
+                        </select>
                         <div *ngIf="submitted && f.sexo.errors" class="invalid-feedback d-block">
                             <div *ngIf="f.sexo.errors.required">Sexo é obrigatório!</div>
                         </div>
@@ -80,9 +80,9 @@
                 <div class="row">
                     <div class="col-3 mx-auto">
                         <button *ngIf="button" [disabled]="loading" class="btn btn-primary">
-              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-              <i class="fa fa-floppy-o"></i> &nbsp; Salvar
-            </button>
+                            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                            <i class="fa fa-floppy-o"></i> &nbsp; Salvar
+                        </button>
                         <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
                     </div>
                 </div>

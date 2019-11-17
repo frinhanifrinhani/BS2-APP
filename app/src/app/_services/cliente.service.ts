@@ -1,13 +1,10 @@
 ﻿import { Cliente } from './../_models/cliente';
-import { TokenInterceptor } from './../_helpers/token.interceptor';
 import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Observable,throwError } from 'rxjs';
-import { map } from 'rxjs/operators';
-
-
+import { Observable, throwError } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class ClienteService {
@@ -21,10 +18,10 @@ export class ClienteService {
 
     getCliente(id): Observable<Cliente[]> {
         return this.http.get<any>(`${environment.apiUrl}/cliente/${id}`).pipe(map(cliente =>
-            cliente.cliente
+            cliente.cliente[0]
         ));
     }
-    
+
     cadastrarCliente(data): Observable<Cliente> {
         return this.http.post<Cliente>(`${environment.apiUrl}/cliente/cadastrar`,
             JSON.stringify(data))
@@ -33,7 +30,7 @@ export class ClienteService {
             ));
     }
 
-    editarCliente(data,id): Observable<Cliente> {
+    editarCliente(data, id): Observable<Cliente> {
         return this.http.put<Cliente>(`${environment.apiUrl}/cliente/atualizar/${id}`,
             JSON.stringify(data))
             .pipe(map(cliente =>
@@ -41,11 +38,11 @@ export class ClienteService {
             ));
     }
 
-    deleteCliente(id){
+    deleteCliente(id) {
         return this.http.delete<Cliente>(`${environment.apiUrl}/cliente/excluir/${id}`)
-        .pipe(map(cliente =>
-            cliente
-        ));
-      }
+            .pipe(map(cliente =>
+                cliente
+            ));
+    }
 
 }

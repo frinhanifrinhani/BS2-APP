@@ -36,7 +36,7 @@ export class CadastraClienteComponent implements OnInit {
 
   private builderClienteForm() {
     this.clienteForm = this.formBuilder.group({
-      nome: ['',Validators.required],
+      nome: ['', Validators.required],
       data_nascimento: ['', Validators.required],
       sexo: ['', Validators.required],
       cep: [''],
@@ -46,7 +46,6 @@ export class CadastraClienteComponent implements OnInit {
       bairro: [''],
       cidade: [''],
       estado: [''],
-
     });
   }
 
@@ -63,57 +62,50 @@ export class CadastraClienteComponent implements OnInit {
     return this.clienteForm.get('sexo');
   }
 
-  consultaCep(){
+  consultaCep() {
     let cep = this.clienteForm.get('cep').value;
 
-    if(cep != null && cep !== '') {
+    if (cep != null && cep !== '') {
       this.buscaCepService.buscaCep(cep)
         .subscribe(
           data => this.setEndereco(data));
     }
   }
 
-  setEndereco(data){
+  setEndereco(data) {
     this.clienteForm.patchValue({
-        endereco: data.logradouro,
-        complemento: data.complemento,
-        bairro: data.bairro,
-        cidade: data.localidade,
-        estado: data.uf,
-      
+      endereco: data.logradouro,
+      complemento: data.complemento,
+      bairro: data.bairro,
+      cidade: data.localidade,
+      estado: data.uf,
     });
   }
 
   onSubmit() {
-
     this.submitted = true;
 
     if (this.clienteForm.invalid) {
       return;
     }
     this.loading = true;
-    
+
     this.clienteService.cadastrarCliente(this.clienteForm.value)
       .subscribe(res => {
-        
+
         this.messageOk = true;
         this.loading = false;
         this.button = false;
         setTimeout(() => {
           this.router.navigate(['/clientes']);
-      }, 2000); 
+        }, 2000);
 
       },
         errorResponse => {
           this.error = errorResponse.errors
           this.loading = false;
         }
-      
+
       );
-      
-    
-
   }
-
-
 }

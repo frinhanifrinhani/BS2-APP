@@ -14,7 +14,7 @@ export class EditaClienteComponent implements OnInit {
   loading = false;
   submitted = false;
   returnUrl: string;
-  id:number;
+  id: number;
   error = '';
   messageOk = false;
   button = true;
@@ -39,7 +39,7 @@ export class EditaClienteComponent implements OnInit {
 
   private builderClienteForm() {
     this.clienteForm = this.formBuilder.group({
-      nome: ['',Validators.required],
+      nome: ['', Validators.required],
       data_nascimento: ['', Validators.required],
       sexo: ['', Validators.required],
       cep: [''],
@@ -69,51 +69,61 @@ export class EditaClienteComponent implements OnInit {
   getCliente(id) {
     this.clienteService.getCliente(id)
       .subscribe(
-        data => {this.setCliente(data)
+        data => {
+          this.setCliente(data)
         },
         errorResponse => {
           this.error = errorResponse.errors
           this.loading = false;
         }
-        
+
       );
   }
-  
-  consultaCep(){
+
+  consultaCep() {
     let cep = this.clienteForm.get('cep').value;
 
-    if(cep != null && cep !== '') {
+    if (cep != null && cep !== '') {
       this.buscaCepService.buscaCep(cep)
         .subscribe(
           data => this.setEndereco(data));
     }
   }
 
-  setCliente(data){
-    this.clienteForm.patchValue({
+  setCliente(data) {
+
+    if (data.enderecos == null) {
+      this.clienteForm.patchValue({
         id: data.id,
         nome: data.nome,
         data_nascimento: data.data_nascimento,
         sexo: data.sexo,
-        cep: data.cep,
-        endereco: data.endereco,
-        complemento: data.complemento,
-        numero: data.numero,
-        bairro: data.bairro,
-        cidade: data.cidade,
-        estado: data.estado,
-      
-    });
+      });
+    } else {
+      this.clienteForm.patchValue({
+        id: data.id,
+        nome: data.nome,
+        data_nascimento: data.data_nascimento,
+        sexo: data.sexo,
+        cep: data.enderecos.cep,
+        endereco: data.enderecos.endereco,
+        complemento: data.enderecos.complemento,
+        numero: data.enderecos.numero,
+        bairro: data.enderecos.bairro,
+        cidade: data.enderecos.cidade,
+        estado: data.enderecos.estado,
+      });
+    }
   }
 
-  setEndereco(data){
+  setEndereco(data) {
     this.clienteForm.patchValue({
       endereco: data.logradouro,
-        complemento: data.complemento,
-        bairro: data.bairro,
-        cidade: data.localidade,
-        estado: data.uf,
-      
+      complemento: data.complemento,
+      bairro: data.bairro,
+      cidade: data.localidade,
+      estado: data.uf,
+
     });
   }
 
@@ -125,15 +135,15 @@ export class EditaClienteComponent implements OnInit {
       return;
     }
     this.loading = true;
-    this.clienteService.editarCliente(this.clienteForm.value,this.id)
+    this.clienteService.editarCliente(this.clienteForm.value, this.id)
       .subscribe(res => {
-        
+
         this.messageOk = true;
         this.loading = false;
         this.button = false;
         setTimeout(() => {
           this.router.navigate(['/clientes']);
-      }, 2000); 
+        }, 2000);
 
       },
         errorResponse => {
@@ -141,9 +151,5 @@ export class EditaClienteComponent implements OnInit {
           this.loading = false;
         }
       );
-    
-
   }
-
-
 }

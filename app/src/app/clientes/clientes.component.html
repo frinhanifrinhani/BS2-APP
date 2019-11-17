@@ -1,77 +1,74 @@
 <div class="container">
-  <p></p>
-  <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item active" aria-current="page">Clientes</li>
-    </ol>
-  </nav>
-  <p>
-    <a href="/clientes/cadastrar" class="btn btn-success"> <i class="fa fa-user-plus"></i> Cadastrar Cliente</a>
-  </p>
-  <div *ngIf="messageOk" class="alert alert-success" role="alert">
-    Cliente excluído com sucesso!
-  </div>
-  <ng-template #confirmDelete let-modal>
-    <div class="modal-header">
-      <button type="button" class="close buttonClose" aria-label="Close" (click)="modal.dismiss('no')">
+    <p></p>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">Clientes</li>
+        </ol>
+    </nav>
+    <p>
+        <a href="/clientes/cadastrar" class="btn btn-success"> <i class="fa fa-user-plus"></i> Cadastrar Cliente</a>
+    </p>
+    <div *ngIf="messageOk" class="alert alert-success" role="alert">
+        Cliente excluído com sucesso!
+    </div>
+    <ng-template #confirmDelete let-modal>
+        <div class="modal-header">
+            <button type="button" class="close buttonClose" aria-label="Close" (click)="modal.dismiss('no')">
         <span aria-hidden="true">&times;</span>
       </button>
-    </div>
-    <div class="modal-body">
-      Deseja mesmo excluir este cliente!
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-outline-primary" (click)="modal.dismiss('no')">Não</button>
-      <button type="button" class="btn btn-outline-danger" (click)="modal.close('yes')">Sim</button>
-    </div>
-  </ng-template>
+        </div>
+        <div class="modal-body">
+            Deseja mesmo excluir este cliente!
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-primary" (click)="modal.dismiss('no')">Não</button>
+            <button type="button" class="btn btn-outline-danger" (click)="modal.close('yes')">Sim</button>
+        </div>
+    </ng-template>
 
-  <table class="table">
-    <thead class="thead">
-      <tr>
-        <th scope="col">Nome</th>
-        <th scope="col">Data de Nasc.</th>
-        <th scope="col">Sexo</th>
-        <th scope="col">Endereço</th>
-        <th scope="col">Bairro</th>
-        <th scope="col">Cidade</th>
-        <th scope="col">Estado</th>
-        <th scope="col">CEP</th>
-        <th scope="col">Editar &nbsp; &nbsp; Excluir</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr scope="row"
-        *ngFor="let cliente of clientes | paginate: { itemsPerPage: 5, currentPage: paginaAtual }; let i = index">
-        <td>{{cliente.nome}}</td>
-        <td>{{cliente.data_nascimento  | date : 'dd/MM/yyyy'}}</td>
-        <td>
-          <div *ngIf="cliente.sexo == 'F'; else M ">Feminino</div>
-          <ng-template #M>
-            Masculino
-          </ng-template>
-        </td>
-        <td>{{cliente.endereco}}
-          {{cliente?.rua}}
-          {{cliente?.numero}}
-          {{cliente?.complemento}}
-        </td>
-        <td>{{cliente.bairro}}</td>
-        <td>{{cliente.cidade}}</td>
-        <td>{{cliente.estado}}</td>
-        <td>{{cliente.cep}}</td>
-        <td>
-          <a href="/clientes/editar/{{cliente.id}}" class="btn btn-primary"><i class="fa fa-pencil-square-o"></i></a>
-          &nbsp;
-          <button type="button" class="btn btn-danger" (click)="open(confirmDelete,cliente.id)"><i
+    <table class="table">
+        <thead class="thead">
+            <tr>
+                <th scope="col">Nome</th>
+                <th scope="col">Data de Nasc.</th>
+                <th scope="col">Sexo</th>
+                <th scope="col">Endereço</th>
+                <th scope="col">Bairro</th>
+                <th scope="col">Cidade</th>
+                <th scope="col">Estado</th>
+                <th scope="col">CEP</th>
+                <th scope="col">Editar &nbsp; &nbsp; Excluir</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr scope="row" *ngFor="let cliente of clientes  | paginate: { itemsPerPage: 10, currentPage: paginaAtual }; let i = index">
+
+                <td>{{cliente.nome}}</td>
+                <td>{{cliente.data_nascimento | date : 'dd/MM/yyyy'}}</td>
+                <td>
+                    <div *ngIf="cliente.sexo == 'F'; else M ">Feminino</div>
+
+                    <ng-template #M>
+                        Masculino
+                    </ng-template>
+                </td>
+                <td>{{cliente.enderecos?.endereco}} {{cliente.enderecos?.rua}} {{cliente.enderecos?.numero}} {{cliente.enderecos?.complemento}}
+                </td>
+                <td>{{cliente.enderecos?.bairro}}</td>
+                <td>{{cliente.enderecos?.cidade}}</td>
+                <td>{{cliente.enderecos?.estado}}</td>
+                <td>{{cliente.enderecos?.cep}}</td>
+                <td>
+                    <a href="/clientes/editar/{{cliente.id}}" class="btn btn-primary"><i class="fa fa-pencil-square-o"></i></a> &nbsp;
+                    <button type="button" class="btn btn-danger" (click)="open(confirmDelete,cliente.id)"><i
               class="fa fa-trash-o">&nbsp;</i></button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 
-  <div id="pagination">
-    <pagination-controls (pageChange)="paginaAtual = $event" previousLabel="Anterior" nextLabel="Próximo">
-    </pagination-controls>
-  </div>
+    <div id="pagination">
+        <pagination-controls (pageChange)="paginaAtual = $event" previousLabel="Anterior" nextLabel="Próximo">
+        </pagination-controls>
+    </div>
 </div>
